@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         final  Contato contato = (Contato) listaContatos.getItemAtPosition(info.position);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Excluir Filme");
+        builder.setTitle("Excluir Contato");
 
         builder.setMessage("Confirma a exclusão do contato " + contato.getNome() + "?" );
 
@@ -112,4 +112,5 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
     }
+
 }

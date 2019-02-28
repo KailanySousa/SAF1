@@ -3,15 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/menu_salvar"
+        android:title="Salvar"
+        android:icon="@drawable/ic_salvar"
+        app:showAsAction="always"/>
+
+    <item
         android:id="@+id/menu_deletar"
         android:title="Excluir"
         android:icon="@drawable/ic_deletar"
         app:showAsAction="always"/>
 
-    <item
-        android:id="@+id/menu_salvar"
-        android:title="Salvar"
-        android:icon="@drawable/ic_salvar"
-        app:showAsAction="always"/>
 
 </menu>

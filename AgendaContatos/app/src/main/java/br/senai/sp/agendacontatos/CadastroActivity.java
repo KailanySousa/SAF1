@@ -1,10 +1,17 @@
 package br.senai.sp.agendacontatos;
 
+import android.content.ClipData;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.drawable.Icon;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.menu.MenuView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import br.senai.sp.dao.ContatoDAO;
 import br.senai.sp.modelo.Contato;
@@ -19,6 +26,13 @@ public class CadastroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro);
 
         helper = new CadastroContatoHelper(this);
+
+        Intent intent = getIntent();
+        Contato contato = (Contato) intent.getSerializableExtra("contato");
+
+        if(contato != null){
+            helper.preencherFormulario(contato);
+        }
     }
 
     @Override
@@ -32,12 +46,12 @@ public class CadastroActivity extends AppCompatActivity {
     @Override
     public  boolean onOptionsItemSelected(MenuItem item){
 
+        final Contato contato = helper.getContato();
+        final ContatoDAO dao = new ContatoDAO(this);
+
         switch (item.getItemId()){
+
             case R.id.menu_salvar:
-
-                Contato contato = helper.getContato();
-                ContatoDAO dao = new ContatoDAO(this);
-
                 if(contato.getId() == 0){
                     dao.salvar(contato);
                 } else {
@@ -49,6 +63,34 @@ public class CadastroActivity extends AppCompatActivity {
                 break;
 
             case R.id.menu_deletar:
+
+                if(contato.getId() != 0){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+                    builder.setTitle("Excluir contato");
+                    builder.setMessage("Confirma a exclusão do contato " + contato.getNome() + "?");
+
+
+                    builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            dao.excluir(contato);
+
+                            Toast.makeText(CadastroActivity.this, "Excluído com sucesso", Toast.LENGTH_LONG).show();
+
+                            dao.close();
+                            finish();
+
+                        }
+                    });
+
+                    builder.setNegativeButton("Não",null);
+
+                    builder.create().show();
+                }
+
+
                 break;
 
             default:
@@ -57,4 +99,5 @@ public class CadastroActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
