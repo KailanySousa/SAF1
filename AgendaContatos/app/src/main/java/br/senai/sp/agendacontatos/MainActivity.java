@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -22,7 +22,7 @@ import br.senai.sp.modelo.Contato;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnNovo;
+    private ImageButton btnNovo;
     private ListView listaContatos;
 
     @Override

@@ -10,9 +10,12 @@
 
     <item
         android:id="@+id/menu_deletar"
-        android:title="Excluir"
-        android:icon="@drawable/ic_deletar"
+        android:title="Excluir"/>
+
+
+    <item
+        android:id="@+id/menu_limpar"
+        android:title="Limpar"
+        android:icon="@drawable/ic_limpar"
         app:showAsAction="always"/>
-
-
 </menu>

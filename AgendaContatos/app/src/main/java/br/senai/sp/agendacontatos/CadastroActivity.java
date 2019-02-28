@@ -53,13 +53,17 @@ public class CadastroActivity extends AppCompatActivity {
 
             case R.id.menu_salvar:
                 if(contato.getId() == 0){
-                    dao.salvar(contato);
+                    if(helper.validar()){
+                        dao.salvar(contato);
+                        dao.close();
+                        finish();
+                    }
                 } else {
                     dao.atualizar(contato);
+                    dao.close();
+                    finish();
                 }
 
-                dao.close();
-                finish();
                 break;
 
             case R.id.menu_deletar:
@@ -93,11 +97,18 @@ public class CadastroActivity extends AppCompatActivity {
 
                 break;
 
+            case R.id.menu_limpar:
+                helper.limparCampos();
+                Toast.makeText(CadastroActivity.this, "Campos Limpos", Toast.LENGTH_LONG).show();
+                break;
+
             default:
                 break;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+
 
 }
