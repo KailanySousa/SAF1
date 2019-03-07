@@ -11,6 +11,7 @@ import android.support.v7.view.menu.MenuView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import br.senai.sp.dao.ContatoDAO;
@@ -19,6 +20,7 @@ import br.senai.sp.modelo.Contato;
 public class CadastroActivity extends AppCompatActivity {
 
     private  CadastroContatoHelper helper;
+    private TextView text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +29,16 @@ public class CadastroActivity extends AppCompatActivity {
 
         helper = new CadastroContatoHelper(this);
 
+        text = findViewById(R.id.txt_titulo);
+
         Intent intent = getIntent();
         Contato contato = (Contato) intent.getSerializableExtra("contato");
 
         if(contato != null){
             helper.preencherFormulario(contato);
+            text.setText("Atualizar Contato");
+        } else {
+            text.setText("Novo Contato");
         }
     }
 
@@ -52,18 +59,19 @@ public class CadastroActivity extends AppCompatActivity {
         switch (item.getItemId()){
 
             case R.id.menu_salvar:
-                if(contato.getId() == 0){
-                    if(helper.validar()){
+
+                if(helper.validar()){
+                    if(contato.getId() == 0){
                         dao.salvar(contato);
                         dao.close();
                         finish();
-                    }
-                } else {
-                    dao.atualizar(contato);
-                    dao.close();
-                    finish();
-                }
 
+                    } else {
+                        dao.atualizar(contato);
+                        dao.close();
+                        finish();
+                    }
+                }
                 break;
 
             case R.id.menu_deletar:
