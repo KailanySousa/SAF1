@@ -10,6 +10,7 @@ public class Contato implements Serializable{
     private String telefone;
     private String email;
     private String linkedin;
+    private byte[] foto;
 
     public int getId() {
         return id;
@@ -57,6 +58,14 @@ public class Contato implements Serializable{
 
     public void setLinkedin(String linkedin) {
         this.linkedin = linkedin;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
+
+    public byte[] getFoto() {
+        return foto;
     }
 
     @Override

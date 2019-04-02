@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import br.senai.sp.adapter.ContatosAdapter;
 import br.senai.sp.dao.ContatoDAO;
 import br.senai.sp.modelo.Contato;
 
@@ -68,7 +69,13 @@ public class MainActivity extends AppCompatActivity {
         List<Contato> contatos = dao.getContatos();
         dao.close();
 
-        ArrayAdapter<Contato> ListaContatosAdapter = new ArrayAdapter<Contato>(this, android.R.layout.simple_list_item_1,contatos);
+        // *** Criação do Adapter que carrega os filmes na ListView
+        // O primeiro parâmetro é qual activity será utilizado
+        //*** utilizando um layout pronto (simple_list_item_1) - padrão
+
+        //ArrayAdapter<Contato> ListaContatosAdapter = new ArrayAdapter<Contato>(this, android.R.layout.simple_list_item_1,contatos);
+
+        ContatosAdapter ListaContatosAdapter = new ContatosAdapter(this, contatos);
         listaContatos.setAdapter(ListaContatosAdapter);
     }
 
