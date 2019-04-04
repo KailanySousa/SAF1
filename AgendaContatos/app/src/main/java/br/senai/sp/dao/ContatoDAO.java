@@ -27,7 +27,8 @@ public class ContatoDAO extends SQLiteOpenHelper {
                 "endereco TEXT NOT NULL," +
                 "telefone TEXT NOT NULL," +
                 "email TEXT NOT NULL," +
-                "linkedin TEXT NOT NULL)";
+                "linkedin TEXT NOT NULL," +
+                "foto BLOB)";
 
         db.execSQL(sql);
     }

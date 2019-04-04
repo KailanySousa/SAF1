@@ -74,8 +74,6 @@ public class CadastroActivity extends AppCompatActivity {
                 //caminho da foto, a foto ficara no external paths declarado em R.xml.provider.paths.xml, num arquivo com o nome foto.jpg
                 caminhoFoto = getExternalFilesDir(null) + nomeArquivo;
 
-                Log.d("CAMINHO_ARQUIVO", caminhoFoto);
-
                 File arquivoFoto = new File(caminhoFoto);
 
                 Uri fotoUri = FileProvider.getUriForFile(CadastroActivity.this, BuildConfig.APPLICATION_ID + ".provider", arquivoFoto);

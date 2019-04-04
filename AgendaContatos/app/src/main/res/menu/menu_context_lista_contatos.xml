@@ -2,8 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_deletar"
-        android:title="Excluir"
+        android:title="Excluir"/>
 
-        />
+    <item
+        android:id="@+id/menu_ligar"
+        android:title="Ligar"/>
 
 </menu>

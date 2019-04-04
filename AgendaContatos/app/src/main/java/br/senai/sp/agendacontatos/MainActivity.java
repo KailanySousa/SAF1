@@ -1,7 +1,17 @@
 package br.senai.sp.agendacontatos;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,10 +21,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.security.PrivateKey;
 import java.util.List;
 
 import br.senai.sp.adapter.ContatosAdapter;
@@ -25,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageButton btnNovo;
     private ListView listaContatos;
+    private ImageView btnLigar;
+    private TextView txtTelefone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
         btnNovo = findViewById(R.id.bt_novo_contato);
         listaContatos = findViewById(R.id.list_contatos);
+        btnLigar = findViewById(R.id.btn_ligar_lista);
+        txtTelefone = findViewById(R.id.txt_telefone);
 
         btnNovo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,32 +109,56 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item){
-        final ContatoDAO dao = new ContatoDAO(MainActivity.this);
 
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()){
+            case R.id.menu_deletar:
 
-        final  Contato contato = (Contato) listaContatos.getItemAtPosition(info.position);
+                final ContatoDAO dao = new ContatoDAO(MainActivity.this);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Excluir Contato");
+                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
-        builder.setMessage("Confirma a exclusão do contato " + contato.getNome() + "?" );
+                final  Contato contato = (Contato) listaContatos.getItemAtPosition(info.position);
 
-        builder.setPositiveButton("sim", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dao.excluir(contato);
-                Toast.makeText(MainActivity.this, "Excluído com sucesso", Toast.LENGTH_SHORT).show();
-                dao.close();
-                carregarLista();
-            }
-        });
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Excluir Contato");
 
-        builder.setNegativeButton("Não", null);
-        builder.create().show();
+                builder.setMessage("Confirma a exclusão do contato " + contato.getNome() + "?" );
+
+                builder.setPositiveButton("sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dao.excluir(contato);
+                        Toast.makeText(MainActivity.this, "Excluído com sucesso", Toast.LENGTH_SHORT).show();
+                        dao.close();
+                        carregarLista();
+                    }
+                });
+
+                builder.setNegativeButton("Não", null);
+                builder.create().show();
+
+            case R.id.menu_ligar:
+
+                String numero = "tel:" + txtTelefone.getText().toString();
+
+                startActivity(new Intent(Intent.ACTION_DIAL));
+                startActivity(new Intent(Intent.ACTION_DIAL));
+
+
+
+
+        }
+
 
         return super.onContextItemSelected(item);
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
+
+
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
