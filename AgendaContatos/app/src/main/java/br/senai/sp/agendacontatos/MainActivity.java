@@ -15,6 +15,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton btnNovo;
     private ListView listaContatos;
     private ImageView btnLigar;
-    private TextView txtTelefone;
+    private TextView txtNumeroTelefone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         btnNovo = findViewById(R.id.bt_novo_contato);
         listaContatos = findViewById(R.id.list_contatos);
         btnLigar = findViewById(R.id.btn_ligar_lista);
-        txtTelefone = findViewById(R.id.txt_telefone);
+        txtNumeroTelefone = findViewById(R.id.txt_telefone_lista);
 
         btnNovo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,14 +111,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item){
 
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+        final  Contato contato = (Contato) listaContatos.getItemAtPosition(info.position);
+
         switch (item.getItemId()){
             case R.id.menu_deletar:
 
                 final ContatoDAO dao = new ContatoDAO(MainActivity.this);
-
-                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-
-                final  Contato contato = (Contato) listaContatos.getItemAtPosition(info.position);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Excluir Contato");
@@ -139,13 +140,15 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.menu_ligar:
 
-                String numero = "tel:" + txtTelefone.getText().toString();
+                realizarLigacao(String.valueOf(contato.getTelefone()));
 
-                startActivity(new Intent(Intent.ACTION_DIAL));
-                startActivity(new Intent(Intent.ACTION_DIAL));
-
-
-
+                //EMAIL
+//                Intent intent = new Intent(Intent.ACTION_SEND);
+//                intent.setType("text/html");
+//                intent.putExtra(Intent.EXTRA_CC, String.valueOf(contato1.getEmail()));
+//                intent.putExtra(Intent.EXTRA_TEXT, "I'm email body.");
+//
+//                startActivity(Intent.createChooser(intent, "Send Email"));
 
         }
 
@@ -162,6 +165,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+    }
+
+    public void realizarLigacao (String telefone){
+
+        Intent fazerLigacao = new Intent(Intent.ACTION_DIAL);
+        fazerLigacao.setData(Uri.parse("tel:" + telefone));
+
+        if (fazerLigacao.resolveActivity(getPackageManager()) != null){
+            startActivity(fazerLigacao);
+        }
     }
 
 }

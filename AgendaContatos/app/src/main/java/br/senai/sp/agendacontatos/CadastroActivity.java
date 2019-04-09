@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.nio.file.FileSystemNotFoundException;
+import br.senai.sp.agendacontatos.MainActivity;
 
 import br.senai.sp.dao.ContatoDAO;
 import br.senai.sp.modelo.Contato;
@@ -189,6 +191,11 @@ public class CadastroActivity extends AppCompatActivity {
                 helper.limparCampos();
                 Toast.makeText(CadastroActivity.this, "Campos Limpos", Toast.LENGTH_LONG).show();
                 break;
+
+            case R.id.menu_ligar_cadastro:
+
+                MainActivity main = new MainActivity();
+                main.realizarLigacao(String.valueOf(contato.getTelefone()));
 
             default:
                 break;

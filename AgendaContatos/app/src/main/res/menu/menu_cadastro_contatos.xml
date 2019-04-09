@@ -16,4 +16,10 @@
         android:id="@+id/menu_limpar"
         android:title="Limpar"
         android:icon="@drawable/ic_limpar"/>
+
+    <item
+        android:id="@+id/menu_ligar_cadastro"
+        android:title="Limpar"
+        android:icon="@drawable/ic_telefone_contato"
+        app:showAsAction="always"/>
 </menu>

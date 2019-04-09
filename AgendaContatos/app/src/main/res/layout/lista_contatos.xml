@@ -60,14 +60,13 @@
             android:background="@drawable/ic_telefone"/>
 
         <TextView
-            android:id="@+id/txt_telefone"
+            android:id="@+id/txt_telefone_lista"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Telefone"
             android:textSize="16sp"
             android:layout_marginRight="16dp"
             android:layout_marginLeft="4dp"/>
-
 
 
     </LinearLayout>

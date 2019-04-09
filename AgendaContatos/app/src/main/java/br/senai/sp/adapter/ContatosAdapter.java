@@ -57,7 +57,7 @@ public class ContatosAdapter extends BaseAdapter {
         TextView txtEmail = view.findViewById(R.id.txt_email);
         txtEmail.setText(contato.getEmail());
 
-        TextView txtTelefone = view.findViewById(R.id.txt_telefone);
+        TextView txtTelefone = view.findViewById(R.id.txt_telefone_lista);
         txtTelefone.setText(contato.getTelefone());
 
         if(contato.getFoto() != null) {
