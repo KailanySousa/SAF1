@@ -137,10 +137,12 @@ public class MainActivity extends AppCompatActivity {
 
                 builder.setNegativeButton("Não", null);
                 builder.create().show();
+                break;
 
             case R.id.menu_ligar:
 
                 realizarLigacao(String.valueOf(contato.getTelefone()));
+                break;
 
                 //EMAIL
 //                Intent intent = new Intent(Intent.ACTION_SEND);
